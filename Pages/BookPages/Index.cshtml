@@ -39,7 +39,9 @@
             <td>
                 @Html.DisplayFor(model => item.Price)
             </td>
-            <td></td>
+            <td>
+                @Html.DisplayFor(model => item.PublishingDate)
+            </td> 
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

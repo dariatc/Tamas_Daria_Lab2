@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Book[0].ID)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Book[0].Title)
             </th>
             <th>
@@ -25,23 +28,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].PublishingDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Publisher.PublisherName)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Book) {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.Title)
+                @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Author)
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Price)
+                @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
-                @Html.DisplayFor(model => item.PublishingDate)
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishingDate)
             </td> 
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+            </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

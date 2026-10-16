@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Tamas_Daria_Lab2.Models;
 
 namespace Tamas_Daria_Lab2.Pages.BookPages;
@@ -30,6 +31,7 @@ public class EditModel : PageModel
             return NotFound();
         }
         Book = book;
+        ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
         return Page();
     }
 

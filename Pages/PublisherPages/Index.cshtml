@@ -29,7 +29,7 @@
                 @Html.DisplayFor(model => item.PublisherName)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Books)
+                    @string.Join(", ", item.Books.Select(b => b.ID))
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |

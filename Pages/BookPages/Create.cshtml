@@ -19,9 +19,10 @@
                 <span asp-validation-for="Book.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Book.Author" class="control-label"></label>
-                <input asp-for="Book.Author" class="form-control" />
-                <span asp-validation-for="Book.Author" class="text-danger"></span>
+                <label asp-for="Book.AutorID" class="control-label"></label>
+                <select asp-for="Book.AutorID" class="form-control" asp-items="ViewBag.AutorID">
+                </select>
+                <span asp-validation-for="Book.AutorID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Book.Price" class="control-label"></label>
@@ -36,6 +37,7 @@
             <div class="form-group">
                 <label asp-for="Book.PublisherID" class="control-label"></label>
                 <select asp-for="Book.PublisherID" class="form-control" asp-items="ViewBag.PublisherID">
+                    <option value="">No publisher</option>
             </select>
                 <span asp-validation-for="Book.PublisherID" class="text-danger"></span>
             </div>

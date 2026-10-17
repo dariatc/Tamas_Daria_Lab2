@@ -22,16 +22,17 @@ public class EditModel : PageModel
     {
         if (id is null)
         {
+            IncarcaListe();
             return NotFound();
         }
 
-        var book = await _context.Book.FirstOrDefaultAsync(m => m.ID == id);
+        var book = await _context.Book.FirstOrDefaultAsync(m => m.ID == id); //aduc carte din DB
         if (book is null)
         {
             return NotFound();
         }
         Book = book;
-        ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+        IncarcaListe(); //e transmis numa idul care e aratat ca nume prin SelectList, deci trebuie sa incarcam lista de autori si editam cartea cu idul respectiv
         return Page();
     }
 
@@ -68,5 +69,16 @@ public class EditModel : PageModel
     private bool BookExists(int id)
     {
         return _context.Book.Any(e => e.ID == id);
+    }
+    private void IncarcaListe()
+    {
+        ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+        var autori = _context.Authors //tabelul 
+            .Select(a => new //select din sql, pt fiecare a faci atributu asta
+            {
+                ID = a.ID, //copiaza id ul din a in campul id
+                Nume = a.FirstName + " " + a.LastName
+            });
+        ViewData["AutorID"] = new SelectList(autori, "ID", "Nume");
     }
 }

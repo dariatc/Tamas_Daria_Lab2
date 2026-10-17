@@ -21,6 +21,27 @@ namespace Tamas_Daria_Lab2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Tamas_Daria_Lab2.Models.Authors", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("Tamas_Daria_Lab2.Models.Book", b =>
                 {
                     b.Property<int>("ID")
@@ -29,9 +50,8 @@ namespace Tamas_Daria_Lab2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AutorID")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
@@ -47,6 +67,8 @@ namespace Tamas_Daria_Lab2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AutorID");
 
                     b.HasIndex("PublisherID");
 
@@ -72,9 +94,17 @@ namespace Tamas_Daria_Lab2.Migrations
 
             modelBuilder.Entity("Tamas_Daria_Lab2.Models.Book", b =>
                 {
+                    b.HasOne("Tamas_Daria_Lab2.Models.Authors", "Autor")
+                        .WithMany()
+                        .HasForeignKey("AutorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Tamas_Daria_Lab2.Models.Publisher", "Publisher")
                         .WithMany("Books")
                         .HasForeignKey("PublisherID");
+
+                    b.Navigation("Autor");
 
                     b.Navigation("Publisher");
                 });

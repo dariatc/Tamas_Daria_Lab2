@@ -19,7 +19,8 @@ public class IndexModel : PageModel
     public async Task OnGetAsync()
     {
         Book = await _context.Book
-            .Include(b => b.Publisher) // Include the Publisher navigation property
+            .Include(a => a.Autor) //expresie lamba pt b carti alege b carti titlu, ca sa poti accesa atributele obiectului
+            .Include(p => p.Publisher) // Include the Publisher navigation property
             .ToListAsync();
     }
 }

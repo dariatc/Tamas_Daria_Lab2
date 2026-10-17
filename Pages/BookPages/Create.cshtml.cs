@@ -17,7 +17,7 @@ public class CreateModel : PageModel
 
     public IActionResult OnGet()
     {
-        ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+        IncarcaListe(); //daca nu e valid, reincarca listele inainte sa returneze pag ca sa aiba dropdow mneu optiuni
         return Page();
     }
 
@@ -29,6 +29,7 @@ public class CreateModel : PageModel
     {
         if (!ModelState.IsValid)
         {
+            IncarcaListe();
             return Page();
         }
 
@@ -36,5 +37,17 @@ public class CreateModel : PageModel
         await _context.SaveChangesAsync();
 
         return RedirectToPage("./Index");
+    }
+    
+    private void IncarcaListe()
+    {
+        ViewData["PublisherID"] = new SelectList(_context.Set<Publisher>(), "ID", "PublisherName");
+        var autori = _context.Authors //tabelul 
+            .Select(a => new //select din sql, pt fiecare a faci atributu asta
+            {
+                ID = a.ID, //copiaza id ul din a in campul id
+                Nume = a.FirstName + " " + a.LastName
+            });
+        ViewData["AutorID"] = new SelectList(autori, "ID", "Nume");
     }
 }

@@ -24,5 +24,6 @@ namespace Tamas_Daria_Lab2.Models
         public int? PublisherID { get; set; }
 
         public Publisher? Publisher { get; set; } //navigation property, ? ii pt ca poate fi null, la obiect poate lipsi, nu trb incarcat neaparat
+        public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }

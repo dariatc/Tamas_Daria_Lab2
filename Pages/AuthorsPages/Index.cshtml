@@ -19,7 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Authors[0].LastName)
             </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Authors[0].Books)</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +31,9 @@
             <td>
                 @Html.DisplayFor(model => item.LastName)
             </td>
+                <td>
+                    @string.Join(", ", item.Books.Select(b => b.ID))
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

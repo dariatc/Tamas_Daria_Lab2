@@ -12,7 +12,7 @@ public class CreateModel : PageModel
 
     public CreateModel(Tamas_Daria_Lab2Context context)
     {
-        _context = context;
+        _context = context; 
     }
 
     public IActionResult OnGet()
@@ -25,7 +25,7 @@ public class CreateModel : PageModel
     public Book Book { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
-    public async Task<IActionResult> OnPostAsync()
+    public async Task<IActionResult> OnPostAsync() //programare asincrona
     {
         if (!ModelState.IsValid)
         {
@@ -33,7 +33,7 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        _context.Book.Add(Book);
+        _context.Book.Add(Book); // ADAUGA TABELUL BOOK IN CONTEXT
         await _context.SaveChangesAsync();
 
         return RedirectToPage("./Index");

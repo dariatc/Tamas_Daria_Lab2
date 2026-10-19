@@ -95,7 +95,7 @@ namespace Tamas_Daria_Lab2.Migrations
             modelBuilder.Entity("Tamas_Daria_Lab2.Models.Book", b =>
                 {
                     b.HasOne("Tamas_Daria_Lab2.Models.Authors", "Autor")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AutorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -107,6 +107,11 @@ namespace Tamas_Daria_Lab2.Migrations
                     b.Navigation("Autor");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("Tamas_Daria_Lab2.Models.Authors", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Tamas_Daria_Lab2.Models.Publisher", b =>

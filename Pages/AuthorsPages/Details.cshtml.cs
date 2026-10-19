@@ -22,7 +22,9 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        var authors = await _context.Authors.FirstOrDefaultAsync(m => m.ID == id);
+        var authors = await _context.Authors
+            .Include(a => a.Books) // Include the Books navigation property
+            .FirstOrDefaultAsync(m => m.ID == id);
         if (authors is null)
         {
             return NotFound();

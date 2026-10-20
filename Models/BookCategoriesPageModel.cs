@@ -2,6 +2,7 @@
 
 namespace Tamas_Daria_Lab2.Models
 {
+    //asta ajuta la formular sa populeze categoriile bifate la inceput si dupa sa le dea update
     public class BookCategoriesPageModel: PageModel //construieste o lista cu toate categoriile si pt fiecare retina daca cartea curenra e bifata sau nu, pt many-to-many 
     {
         public List<AssignedCategoryData> AssignedCategoryDataList; 
@@ -29,12 +30,12 @@ namespace Tamas_Daria_Lab2.Models
             if(selectedCategories == null)
             {
                 bookToUpdate.BookCategories = new List<BookCategory>();
-                return;
+                return; //daca nu sunt categorii selectate, se face o noua lista goala
             }
 
             var selectedCategoriesHS = new HashSet<string>(selectedCategories);
             var bookCategories = new HashSet<int>
-                (bookToUpdate.BookCategories.Select(c => c.CategoryID));
+                (bookToUpdate.BookCategories.Select(c => c.Category.ID));
             foreach (var cat in context.Category)
             {
                 if (selectedCategoriesHS.Contains(cat.ID.ToString()))
@@ -46,7 +47,7 @@ namespace Tamas_Daria_Lab2.Models
                             {
                                 BookID = bookToUpdate.ID,
                                 CategoryID = cat.ID
-                            })
+                            });
                     }
                 }
                 else
@@ -56,8 +57,8 @@ namespace Tamas_Daria_Lab2.Models
                         BookCategory bookToRemove
                             = bookToUpdate
                                .BookCategories
-                               .SingleOrDefault(I => I.CategoryID == cat.ID);
-                        context.Remove(bookToRemove)
+                               .SingleOrDefault(i => i.CategoryID == cat.ID);
+                        context.Remove(bookToRemove);
                     }
                 }
             }

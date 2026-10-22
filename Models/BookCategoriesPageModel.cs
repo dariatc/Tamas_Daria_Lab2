@@ -20,7 +20,7 @@ namespace Tamas_Daria_Lab2.Models
                 {
                     CategoryID = cat.ID,
                     Name = cat.CategoryName,
-                    Assigned = bookCategories.Contains(cat.ID)
+                    Assigned = bookCategories.Contains(cat.ID) //contains e functie de la hashset, cauta rapid
                 });
             }
         }
@@ -33,7 +33,7 @@ namespace Tamas_Daria_Lab2.Models
                 return; //daca nu sunt categorii selectate, se face o noua lista goala
             }
 
-            var selectedCategoriesHS = new HashSet<string>(selectedCategories);
+            var selectedCategoriesHS = new HashSet<string>(selectedCategories); //string[] primeste din formular de la edit.cshtml
             var bookCategories = new HashSet<int>
                 (bookToUpdate.BookCategories.Select(c => c.Category.ID));
             foreach (var cat in context.Category)
@@ -57,7 +57,7 @@ namespace Tamas_Daria_Lab2.Models
                         BookCategory bookToRemove
                             = bookToUpdate
                                .BookCategories
-                               .SingleOrDefault(i => i.CategoryID == cat.ID);
+                               .SingleOrDefault(i => i.CategoryID == cat.ID); //doar id-ul where id = cat.id
                         context.Remove(bookToRemove);
                     }
                 }

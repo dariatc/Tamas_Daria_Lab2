@@ -54,12 +54,12 @@
                                         {
                                             @:</tr><tr> <!-- dupa a treia coloana inchizi randu si faci unu nou -->
                                         }
-                                        @:<td>
+                                        @:<td> <!-- arond stii tu cu : inseamna ca e text efectiv de afisat care nu mai e c# sau e mod text-->
                                         <input type="checkbox"
                                         name="selectedCategories"
                                         value="@cat.CategoryID"
                                         @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
-                                        @cat.CategoryID @: @cat.Name
+                                        @cat.CategoryID @: @cat.Name 
                                         @:</td>
                                     }
                                 @:</tr>

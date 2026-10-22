@@ -6,7 +6,7 @@ using Tamas_Daria_Lab2.Models;
 
 namespace Tamas_Daria_Lab2.Pages.BookPages;
 
-public class CreateModel : PageModel
+public class CreateModel : BookCategoriesPageModel
 {
     private readonly Tamas_Daria_Lab2Context _context;
 
@@ -18,6 +18,11 @@ public class CreateModel : PageModel
     public IActionResult OnGet()
     {
         IncarcaListe(); //daca nu e valid, reincarca listele inainte sa returneze pag ca sa aiba dropdow mneu optiuni
+
+        var book = new Book();
+        book.BookCategories = new List<BookCategory>();
+
+        PopulateAssignedCategoryData(_context, book);
         return Page();
     }
 
@@ -25,17 +30,26 @@ public class CreateModel : PageModel
     public Book Book { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD.
-    public async Task<IActionResult> OnPostAsync() //programare asincrona
+    public async Task<IActionResult> OnPostAsync(string[] selectedCategories) //programare asincrona
     {
-        if (!ModelState.IsValid)
+        
+        var newBook = new Book();
+        if( selectedCategories != null)
         {
-            IncarcaListe();
-            return Page();
+            newBook.BookCategories = new List<BookCategory>();
+            foreach (var cat in selectedCategories)
+            {
+                var catToAdd = new BookCategory
+                {
+                    CategoryID = int.Parse(cat) //face din string in int ca parametrul e string[]
+                };
+                newBook.BookCategories.Add(catToAdd);
+            }
         }
 
-        _context.Book.Add(Book); // ADAUGA TABELUL BOOK IN CONTEXT
-        await _context.SaveChangesAsync();
-
+        Book.BookCategories = newBook.BookCategories; //muti din variabila ajutatoare in aia oficiala
+        _context.Book.Add(Book);
+        await _context.SaveChangesAsync(); //sa schimbe si in context/DB
         return RedirectToPage("./Index");
     }
     

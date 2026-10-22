@@ -24,6 +24,8 @@ public class DetailsModel : PageModel
 
         var book = await _context.Book
             .Include(a => a.Autor) // pt ca trb sa accesam si datele autorului
+            .Include(b => b.BookCategories).ThenInclude(b => b.Category)
+            .AsNoTracking() //e doar pt citire
             .FirstOrDefaultAsync(m => m.ID == id);
         if (book is null)
         {

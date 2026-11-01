@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Tamas_Daria_Lab2.Models;
+using Tamas_Daria_Lab2.Models.ViewModels;
 
 namespace Tamas_Daria_Lab2.Pages.CategoryPages;
 
@@ -16,8 +17,23 @@ public class IndexModel : PageModel
 
     public IList<Category> Category { get; set; } = default!;
 
-    public async Task OnGetAsync()
+    public PublisherIndexData CategoryData { get; set; }
+    public int CategoryID { get; set; }
+
+    public async Task OnGetAsync(int? id)
     {
-        Category = await _context.Category.ToListAsync();
+        CategoryData = new PublisherIndexData();
+        CategoryData.Categories = await _context.Category
+            .Include(i => i.BookCategories).ThenInclude(b => b.Book).ThenInclude(a => a.Autor)
+            .ToListAsync();
+
+        if (id != null)
+        {
+            CategoryID = id.Value;
+            Category category = CategoryData.Categories
+                .Where(i => i.ID == id.Value).Single();
+            CategoryData.Books = category.BookCategories.Select(s => s.Book);
+        }
+
     }
 }

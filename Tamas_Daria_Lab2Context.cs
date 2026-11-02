@@ -6,4 +6,7 @@ public class Tamas_Daria_Lab2Context(DbContextOptions<Tamas_Daria_Lab2Context> o
     public DbSet<Tamas_Daria_Lab2.Models.Publisher> Publisher { get; set; } = default!; //trb sa aiba context pt baza inainte de migrare!!
     public DbSet<Tamas_Daria_Lab2.Models.Authors> Authors { get; set; } = default!;
     public DbSet<Tamas_Daria_Lab2.Models.Category> Category { get; set; } = default!;
+    public DbSet<Tamas_Daria_Lab2.Models.Member> Member { get; set; } = default!;
+    public DbSet<Tamas_Daria_Lab2.Models.Borrowing> Borrowing { get; set; } = default!;
+
 }

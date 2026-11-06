@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Tamas_Daria_Lab2.Data
+@inject SignInManager<ApplicationUser> SignInManager  
+<!--@using Microsoft.EntityFrameworkCore linia asta nu e folosita -->
+<!--luat de pe github, nu s-a generat automat la scaffold, editat putin de mine -->
+<!-- inject = dependecy injection = da un obiect de tipul ala gata facut ca sa poata fi folost in view-->
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User)) //user este proprietatea din contextul view-ului, contine informatii despre user-ul logat, daca e logat sau nu, ce rol are etc
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-id-card"></i> My Account</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new {area = ""})" method="post">
+                <button type="submit" class="nav-link btn btn-link"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus"></i> Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </li>
+    }
+</ul>

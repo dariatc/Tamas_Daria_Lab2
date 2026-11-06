@@ -24,7 +24,10 @@ public class DeleteModel : PageModel
             return NotFound();
         }
 
-        var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+        var borrowing = await _context.Borrowing
+            .Include(b => b.Book).ThenInclude(b => b.Autor)
+            .Include(n => n.Member)
+            .FirstOrDefaultAsync(m => m.ID == id);
         if (borrowing is null)
         {
             return NotFound();

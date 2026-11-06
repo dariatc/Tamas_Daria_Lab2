@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Tamas_Daria_Lab2.Models;
 
@@ -30,6 +31,8 @@ public class EditModel : PageModel
             return NotFound();
         }
         Borrowing = borrowing;
+
+        IncarcaListe();
         return Page();
     }
 
@@ -66,5 +69,19 @@ public class EditModel : PageModel
     private bool BorrowingExists(int id)
     {
         return _context.Borrowing.Any(e => e.ID == id);
+    }
+
+    private async Task IncarcaListe()
+    {
+        ViewData["MemberID"] = new SelectList( _context.Set<Member>(), "ID", "FullName");
+        //trb variabila ca in situatia cu books pt ca selectlist poate primi un singur camp
+        var carti = _context.Book
+            .Include(a => a.Autor)
+            .Select(s => new
+            {
+                ID = s.ID,
+                Descriere = s.Title + " - " + s.Autor.FirstName + " " + s.Autor.LastName + " - " + s.PublishingDate.ToString("yyyy")
+            });
+        ViewData["BookID"] = new SelectList( carti , "ID", "Descriere");
     }
 }

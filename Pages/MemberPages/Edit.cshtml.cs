@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Tamas_Daria_Lab2.Models;
 
@@ -24,12 +25,15 @@ public class EditModel : PageModel
             return NotFound();
         }
 
-        var member = await _context.Member.FirstOrDefaultAsync(m => m.ID == id);
+        var member = await _context.Member
+            .Include(b => b.Borrowings)
+            .FirstOrDefaultAsync(m => m.ID == id);
         if (member is null)
         {
             return NotFound();
         }
         Member = member;
+        
         return Page();
     }
 
@@ -67,4 +71,6 @@ public class EditModel : PageModel
     {
         return _context.Member.Any(e => e.ID == id);
     }
+
+    
 }

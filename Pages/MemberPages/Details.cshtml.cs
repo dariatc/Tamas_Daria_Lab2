@@ -22,7 +22,9 @@ public class DetailsModel : PageModel
             return NotFound();
         }
 
-        var member = await _context.Member.FirstOrDefaultAsync(m => m.ID == id);
+        var member = await _context.Member
+            .Include(b => b.Borrowings)
+            .FirstOrDefaultAsync(m => m.ID == id);
         if (member is null)
         {
             return NotFound();

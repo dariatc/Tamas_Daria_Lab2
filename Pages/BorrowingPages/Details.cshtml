@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.Borrowing.MemberID)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowing.Member)
+            @Html.DisplayNameFor(model => model.Borrowing.Member.FullName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Borrowing.Member)
+            @Html.DisplayFor(model => model.Borrowing.Member.FullName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Borrowing.BookID)
@@ -30,10 +30,22 @@
             @Html.DisplayFor(model => model.Borrowing.BookID)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowing.Book)
+            @Html.DisplayNameFor(model => model.Borrowing.Book.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Borrowing.Book)
+            @Html.DisplayFor(model => model.Borrowing.Book.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Borrowing.Book.Autor.FullName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Borrowing.Book.Autor.FullName)
+        </dd>
+<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Borrowing.Book.PublishingDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Borrowing.Book.PublishingDate)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Borrowing.ReturnDate)

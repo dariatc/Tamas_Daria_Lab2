@@ -18,6 +18,8 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        Member = await _context.Member.ToListAsync();
+        Member = await _context.Member
+            .Include(b => b.Borrowings)
+            .ToListAsync();
     }
 }

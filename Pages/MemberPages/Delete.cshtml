@@ -52,7 +52,10 @@
             @Html.DisplayNameFor(model => model.Member.Borrowings)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Member.Borrowings)
+            @if (Model.Member.Borrowings != null) //trb sa faci asa pt ca e vb de colectie, in colectie nu poti pune pur id pt ac colectia nu are id
+            {
+                @string.Join(", ", Model.Member.Borrowings.Select(b => b.ID))
+            }
         </dd>
     </dl>
     <form method="post">
